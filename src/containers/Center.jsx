@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { Image, Text } from '@react-three/drei';
+import { Text } from '@react-three/drei';
 import { Sphere, Fog } from '../components';
-
-import logos from '../assets/aly.png';
+import { Image } from '../components';
+import logos from '../assets/apps-logo.png';
 import fontUrl from '../assets/fonts/Lato-Bold.ttf';
 
 const Center = ({ sphereText, allApps }) => {
@@ -30,12 +30,7 @@ const Center = ({ sphereText, allApps }) => {
 					text={text}
 				/>
 			))}
-			<Image
-				url={logos}
-				scale={[0.2, 0.05]}
-				transparent
-				position={[0, 0.02, 0.3]}
-			/>
+			<Image url={logos} scale={0.2} position={[0, 0.01, 0.3]} />
 			<Text scale={0.029} position={[0, -0.05, 0.3]} font={fontUrl}>
 				Apps: All ({allApps})
 			</Text>
