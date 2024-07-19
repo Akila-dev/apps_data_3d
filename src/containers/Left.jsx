@@ -9,10 +9,19 @@ import tubes from '../assets/tube.png';
 import grayPoint from '../assets/point-circle.png';
 import activePoint from '../assets/active-point.png';
 
-const Left = ({ leftText }) => {
+const Left = ({ leftText, activeSphere, setActiveSphere, dataLength }) => {
 	// eslint-disable-next-line no-unused-vars
 	const [activeNav, setActiveNav] = useState(4);
 	const positions = [2, 1, 0, -1, -2, -3, -4];
+
+	const pointerOver = () => {
+		// setHovering(true);
+		setActiveSphere(dataLength - 1);
+	};
+	const pointerOut = () => {
+		// setHovering(false);
+		setActiveSphere(-1);
+	};
 	return (
 		<group>
 			{leftText.map((text, i) => (
@@ -22,6 +31,7 @@ const Left = ({ leftText }) => {
 						position={[0, (positions[i] - 0.2) / 18.5, 0]}
 						font={fontUrl}
 						anchorX="right"
+						color={activeSphere === -1 ? 0xffffff : 0x333333}
 					>
 						{text}
 					</Text>
@@ -29,7 +39,13 @@ const Left = ({ leftText }) => {
 						url={activeNav === i ? activePoint : grayPoint}
 						scale={0.03}
 						position={[0.03, (positions[i] - 0.2) / 18.5, 0.01]}
+						// opacity={activeSphere === -1 ? 1 : 0.1}
+
 						// opacity={0.4}
+					/>
+					<pointLight
+						intensity={0.01}
+						position={[0, (positions[i] - 0.2) / 18.5, 0.1]}
 					/>
 				</mesh>
 			))}
@@ -37,15 +53,27 @@ const Left = ({ leftText }) => {
 				url={tubes}
 				scale={0.4}
 				position={[0.22, -0.097, 0]}
-				opacity={0.4}
+				// opacity={0.4}
+				opacity={activeSphere === -1 ? 0.4 : 0.1}
 			/>
-			<mesh position={[0.21, -0.36, 0.01]}>
+			<mesh
+				position={[0.21, -0.36, 0.01]}
+				onPointerOver={pointerOver}
+				onPointerOut={pointerOut}
+			>
 				<Fog scale={[0.23, 0.23]} top={0} />
 				<Sphere
 					position={[0, 0, 0]}
 					labelPosition={[0, -1.3, 0]}
 					textRotation={0}
 					text={'SHADOW CLOUD'}
+					active={
+						activeSphere === dataLength - 1
+							? true
+							: activeSphere === -1
+							? true
+							: false
+					}
 				/>
 			</mesh>
 		</group>

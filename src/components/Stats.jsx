@@ -1,58 +1,78 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
 // import { Image } from '@react-three/drei';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { motion } from 'framer-motion-3d';
+import { useFrame } from '@react-three/fiber';
 
 import { StatsText, Image } from '../components';
 
 import circle from '../assets/circle.png';
 import lines from '../assets/lines2.png';
 
-const Circle = ({ position, stat, label, onClick }) => (
-	<mesh onClick={onClick} position={position}>
-		<Image url={circle} scale={0.17} position={[0, 0, -0.01]} />
+const Circle = ({ position, stat, label, onClick }) => {
+	const circleRef = useRef();
+	useFrame((state, delta) => {
+		// circleRef.current.rotation.x -= delta / 5;
+		circleRef.current.rotation.z -= delta * 1;
+	});
+	return (
+		<mesh position={position} onPointerDown={onClick}>
+			<motion.mesh ref={circleRef}>
+				<Image url={circle} scale={0.17} position={[0, 0, -0.01]} />
+			</motion.mesh>
 
-		<StatsText
-			stat={stat}
-			label={label}
-			textAlign="center"
-			position={[0, 0, 0]}
-			scale={1.1}
-		/>
-		{/* OVERLAY FOR CLICK EVENT */}
-		<Image url={circle} scale={0.17} position={[0, 0, 1]} opacity={0.001} />
-	</mesh>
-);
+			<mesh onClick={onClick}>
+				<StatsText
+					stat={stat}
+					label={label}
+					textAlign="center"
+					position={[0, 0, 0]}
+					scale={1.1}
+				/>
+			</mesh>
+			{/* OVERLAY FOR CLICK EVENT
+			<Image
+				onClick={onClick}
+				url={circle}
+				scale={0.17}
+				position={[0, 0, 1]}
+				opacity={0.003}
+			/> */}
+		</mesh>
+	);
+};
 
-const StatsExpandedContent = ({ position }) => (
+const StatsExpandedContent = ({ position, automated, manual }) => (
 	<mesh position={position}>
 		<StatsText
 			stat=""
-			label="89 AUTOMATED"
+			label={`${automated} AUTOMATED`}
 			textAlign="center"
-			position={[-0.005, 0.11, 0]}
+			position={[-0.005, 0.105, 0]}
 			scale={1.1}
 		/>
 		<Image url={lines} scale={0.13} position={[0, 0, 0]} />
 		<StatsText
 			stat=""
-			label="233 MANUAL"
+			label={`${manual} MANUAL`}
 			textAlign="center"
-			position={[-0.005, -0.07, 0]}
+			position={[-0.005, -0.065, 0]}
 			scale={1.1}
 		/>
 	</mesh>
 );
-const StatsNumbers = ({ position }) => (
+const StatsNumbers = ({ position, resolver, open }) => (
 	<group position={position}>
 		<StatsText
-			stat="44"
+			stat={resolver}
 			label="RESOLVERS"
 			textAlign="left"
 			position={[0, 0.045, 0]}
 		/>
 		<StatsText
-			stat="11"
+			stat={open}
 			label="OPEN"
 			textAlign="left"
 			position={[0, -0.045, 0]}
@@ -60,14 +80,16 @@ const StatsNumbers = ({ position }) => (
 	</group>
 );
 
-const Stats = ({ position, stat, label }) => {
+const Stats = ({
+	position,
+	stat,
+	label,
+	resolver,
+	open,
+	automated,
+	manual,
+}) => {
 	const [expanded, setExpanded] = useState(false);
-
-	// useEffect(() => {
-	// 	if (expanded) {
-	// 		console.log('expanded');
-	// 	}
-	// }, [expanded]);
 
 	return (
 		<mesh position={position}>
@@ -78,9 +100,17 @@ const Stats = ({ position, stat, label }) => {
 				label={label}
 			/>
 			<mesh scale={expanded ? 1 : 0}>
-				<StatsExpandedContent position={[0.14, 0, -0.1]} />
+				<StatsExpandedContent
+					position={[0.14, 0, -0.1]}
+					automated={automated}
+					manual={manual}
+				/>
 			</mesh>
-			<StatsNumbers position={[expanded ? 0.21 : 0.1, 0, 0]} />
+			<StatsNumbers
+				position={[expanded ? 0.21 : 0.1, 0, 0]}
+				resolver={resolver}
+				open={open}
+			/>
 			{/* <StatsNumbers position={[0.1, 0, 0]} /> */}
 		</mesh>
 	);
