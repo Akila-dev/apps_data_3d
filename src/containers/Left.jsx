@@ -15,6 +15,7 @@ const Left = ({
 	setActiveSphere,
 	dataLength,
 	sphereData,
+	setActiveData,
 }) => {
 	// eslint-disable-next-line no-unused-vars
 	const [activeNav, setActiveNav] = useState(4);
@@ -63,9 +64,8 @@ const Left = ({
 				opacity={activeSphere === -1 ? 0.4 : 0.1}
 			/>
 			<mesh
+				onClick={() => setActiveData(dataLength - 1)}
 				position={[0.21, -0.36, 0.01]}
-				onPointerOver={pointerOver}
-				onPointerOut={pointerOut}
 			>
 				<Fog scale={[0.23, 0.23]} top={0} />
 				<Sphere
@@ -83,6 +83,8 @@ const Left = ({
 					red={sphereData[dataLength - 1].red}
 					blue={sphereData[dataLength - 1].blue}
 					gray={sphereData[dataLength - 1].gray}
+					onPointerOver={pointerOver}
+					onPointerOut={pointerOut}
 				/>
 			</mesh>
 		</group>

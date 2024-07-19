@@ -13,6 +13,7 @@ const Center = ({
 	activeSphere,
 	setActiveSphere,
 	sphereData,
+	setActiveData,
 }) => {
 	// const [activeSphere, setActiveSphere] = useState(-1);
 	const val = 0.35 * Math.PI;
@@ -71,6 +72,7 @@ const Center = ({
 						red={sphereData[i].red}
 						blue={sphereData[i].blue}
 						gray={sphereData[i].gray}
+						onClick={() => setActiveData(i)}
 					/>
 				</mesh>
 			))}

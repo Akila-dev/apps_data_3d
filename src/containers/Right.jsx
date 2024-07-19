@@ -8,14 +8,14 @@ import { StatsText, Image } from '../components';
 
 import lines from '../assets/lines1.png';
 
-const Right = ({ sphereData, activeSphere }) => {
+const Right = ({ sphereData, activeSphere, activeData }) => {
 	return (
 		<group className="flex flex-col gap-5">
 			{/* <pointLight position={[1, 0, 1]} intensity={1000} /> */}
 			<StatsText
 				stat={
 					activeSphere === -1
-						? sphereData[0].attackPath
+						? sphereData[activeData].attackPath
 						: sphereData[activeSphere].attackPath
 				}
 				label="ATTACK PATH"
@@ -32,7 +32,7 @@ const Right = ({ sphereData, activeSphere }) => {
 			<StatsText
 				stat={
 					activeSphere === -1
-						? sphereData[0].criticalRisks
+						? sphereData[activeData].criticalRisks
 						: sphereData[activeSphere].criticalRisks
 				}
 				label="CRITICAL RISKS"
@@ -43,28 +43,28 @@ const Right = ({ sphereData, activeSphere }) => {
 				position={[0.15, 0.1, 0.1]}
 				stat={
 					activeSphere === -1
-						? sphereData[0].incidents
+						? sphereData[activeData].incidents
 						: sphereData[activeSphere].incidents
 				}
 				label="INCIDENTS"
 				resolver={
 					activeSphere === -1
-						? sphereData[0].incidentResolvers
+						? sphereData[activeData].incidentResolvers
 						: sphereData[activeSphere].incidentResolvers
 				}
 				open={
 					activeSphere === -1
-						? sphereData[0].incidentOpen
+						? sphereData[activeData].incidentOpen
 						: sphereData[activeSphere].incidentOpen
 				}
 				automated={
 					activeSphere === -1
-						? sphereData[0].incidentAutomated
+						? sphereData[activeData].incidentAutomated
 						: sphereData[activeSphere].incidentAutomated
 				}
 				manual={
 					activeSphere === -1
-						? sphereData[0].incidentManual
+						? sphereData[activeData].incidentManual
 						: sphereData[activeSphere].incidentManual
 				}
 			/>
@@ -72,28 +72,28 @@ const Right = ({ sphereData, activeSphere }) => {
 				position={[0.15, -0.1, 0.1]}
 				stat={
 					activeSphere === -1
-						? sphereData[0].actionPlans
+						? sphereData[activeData].actionPlans
 						: sphereData[activeSphere].actionPlans
 				}
 				label="ACTION PLANS"
 				resolver={
 					activeSphere === -1
-						? sphereData[0].aPResolvers
+						? sphereData[activeData].aPResolvers
 						: sphereData[activeSphere].aPResolvers
 				}
 				open={
 					activeSphere === -1
-						? sphereData[0].aPOpen
+						? sphereData[activeData].aPOpen
 						: sphereData[activeSphere].aPOpen
 				}
 				automated={
 					activeSphere === -1
-						? sphereData[0].aAutomated
+						? sphereData[activeData].aAutomated
 						: sphereData[activeSphere].aAutomated
 				}
 				manual={
 					activeSphere === -1
-						? sphereData[0].aManual
+						? sphereData[activeData].aManual
 						: sphereData[activeSphere].aManual
 				}
 			/>

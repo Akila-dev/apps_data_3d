@@ -11,6 +11,7 @@ import { Center, Left, Right } from '../containers';
 const Canvas = () => {
 	// const [hovering, setHovering] = useState(false);
 	const [activeSphere, setActiveSphere] = useState(-1);
+	const [activeData, setActiveData] = useState(0);
 
 	const leftText = [
 		'HTTP/S TRAFFIC',
@@ -31,17 +32,34 @@ const Canvas = () => {
 		'AI',
 	];
 	const sphereData = [
+		// {
+		// 	attackPath: 150,
+		// 	criticalRisks: 633,
+		// 	incidents: 55,
+		// 	actionPlans: 62,
+		// 	incidentResolvers: 44,
+		// 	incidentOpen: 11,
+		// 	incidentAutomated: 89,
+		// 	incidentManual: 64,
+		// 	aPResolvers: 44,
+		// 	aPOpen: 16,
+		// 	aAutomated: 89,
+		// 	aManual: 24,
+		// 	gray: 80,
+		// 	red: 15,
+		// 	blue: 5,
+		// },
 		{
 			attackPath: 36,
-			criticalRisks: 26,
+			criticalRisks: 23,
 			incidents: 7,
-			actionPlans: 32,
+			actionPlans: 16,
 			incidentResolvers: 4,
-			incidentOpen: 2,
+			incidentOpen: 3,
 			incidentAutomated: 89,
 			incidentManual: 64,
-			aPResolvers: 4,
-			aPOpen: 2,
+			aPResolvers: 15,
+			aPOpen: 1,
 			aAutomated: 89,
 			aManual: 24,
 			gray: 80,
@@ -117,6 +135,23 @@ const Canvas = () => {
 			blue: 0,
 		},
 		{
+			attackPath: 8,
+			criticalRisks: 217,
+			incidents: 9,
+			actionPlans: 19,
+			incidentResolvers: 7,
+			incidentOpen: 2,
+			incidentAutomated: 39,
+			incidentManual: 46,
+			aPResolvers: 15,
+			aPOpen: 4,
+			aAutomated: 34,
+			aManual: 20,
+			gray: 80,
+			red: 15,
+			blue: 5,
+		},
+		{
 			attackPath: 36,
 			criticalRisks: 26,
 			incidents: 7,
@@ -133,23 +168,7 @@ const Canvas = () => {
 			red: 20,
 			blue: 5,
 		},
-		{
-			attackPath: 36,
-			criticalRisks: 26,
-			incidents: 7,
-			actionPlans: 32,
-			incidentResolvers: 4,
-			incidentOpen: 2,
-			incidentAutomated: 89,
-			incidentManual: 64,
-			aPResolvers: 4,
-			aPOpen: 2,
-			aAutomated: 89,
-			aManual: 24,
-			gray: 80,
-			red: 15,
-			blue: 5,
-		},
+
 		// Last one must always be For the Shadow Cloud
 		{
 			attackPath: 36,
@@ -183,6 +202,7 @@ const Canvas = () => {
 							setActiveSphere={setActiveSphere}
 							dataLength={sphereData.length}
 							sphereData={sphereData}
+							setActiveData={setActiveData}
 						/>
 					</group>
 					<group scale={1.5} position={[0, 0, -9]}>
@@ -192,10 +212,16 @@ const Canvas = () => {
 							allApps={245}
 							activeSphere={activeSphere}
 							setActiveSphere={setActiveSphere}
+							setActiveData={setActiveData}
 						/>
 					</group>
 					<group scale={1.5} position={[0.85, 0, -10]}>
-						<Right sphereData={sphereData} activeSphere={activeSphere} />
+						<Right
+							sphereData={sphereData}
+							activeSphere={activeSphere}
+							activeData={activeData}
+							setActiveData={setActiveData}
+						/>
 					</group>
 				</group>
 				{/* <gridHelper color="white" args={[1, 1]} /> */}

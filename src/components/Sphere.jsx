@@ -32,6 +32,7 @@ const Sphere = ({
 	red,
 	blue,
 	gray,
+	onClick,
 }) => {
 	// const texture = useTexture(sphereFill);
 	const ref = useRef();
@@ -119,7 +120,11 @@ const Sphere = ({
 				>
 					{text}
 				</Text>
-				<mesh onPointerOver={onPointerOver} onPointerOut={onPointerOut}>
+				<mesh
+					onPointerOver={onPointerOver}
+					onPointerOut={onPointerOut}
+					onClick={onClick}
+				>
 					<Image
 						url={sphereFill}
 						scale={[1.75, 1.5]}
