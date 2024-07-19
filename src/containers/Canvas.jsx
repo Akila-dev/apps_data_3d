@@ -192,8 +192,8 @@ const Canvas = () => {
 		<div className="h-screen w-full">
 			<SceneCanvas camera={{ position: [0, 0, 1], fov: 10 }}>
 				<OrbitControls enableRotate={false} />
-				<ambientLight intensity={1} />
-				<pointLight intensity={10} position={[0, -1, 1]} />
+				<ambientLight intensity={2} />
+				{/* <pointLight intensity={10} position={[0, -1, 1]} /> */}
 
 				{/* <Sphere position={[2, 2, 0]} /> */}
 				<group position={[0, 0.05, 2]}>
