@@ -46,10 +46,22 @@ const Sphere = ({
 	const blueRef = useRef();
 	// const [decal] = useTexture([sphereFill]);
 	const [sphere, setSphere] = useState([0, 0, 0]);
+	const [redPositions, setRedPositions] = useState([0, 0, 0]);
+	const [bluePositions, setBluePositions] = useState([0, 0, 0]);
 
 	useEffect(() => {
 		setSphere(
 			random.inSphere(new Float32Array((2000 * gray) / 100), { radius: 1 })
+		);
+		setRedPositions(
+			random.inSphere(new Float32Array((2000 * red) / 100), {
+				radius: 0.75,
+			})
+		);
+		setBluePositions(
+			random.inSphere(new Float32Array((2000 * blue) / 100), {
+				radius: 0.5,
+			})
 		);
 	}, []);
 
@@ -64,12 +76,8 @@ const Sphere = ({
 		blueRef.current.rotation.y -= delta / 5;
 	});
 
-	const redPositions = random.inSphere(new Float32Array((2000 * red) / 100), {
-		radius: 0.75,
-	});
-	const bluePositions = random.inSphere(new Float32Array((2000 * blue) / 100), {
-		radius: 0.5,
-	});
+	// const redPositions = ;
+	// const bluePositions = ;
 
 	return (
 		<motion.mesh
@@ -88,11 +96,11 @@ const Sphere = ({
 						<PointMaterial
 							transparent
 							// color={active ? 0x777777 : 0x333333}
-							size={0.115}
+							size={0.14}
 							sizeAttenuation={true}
 							depthWrite={false}
 							map={grayTexture}
-							opacity={active ? 1 : 0.2}
+							opacity={active ? 1 : 0.3}
 						/>
 					</Points>
 					<Points ref={redRef} positions={redPositions} stride={3}>
@@ -100,10 +108,10 @@ const Sphere = ({
 							transparent
 							// color={active ? 0xaa0000 : 0x330000}
 							map={redTexture}
-							size={0.115}
+							size={0.14}
 							sizeAttenuation={true}
 							depthWrite={false}
-							opacity={active ? 1 : 0.2}
+							opacity={active ? 1 : 0.3}
 						/>
 						{/* <Point position={[0, 0, 1]} color="red" /> */}
 					</Points>
@@ -111,11 +119,11 @@ const Sphere = ({
 						<pointsMaterial
 							transparent
 							color={active ? 0x0000aa : 0x000033}
-							size={0.115}
+							size={0.14}
 							sizeAttenuation={true}
 							depthWrite={false}
 							map={blueTexture}
-							opacity={active ? 1 : 0.2}
+							opacity={active ? 1 : 0.3}
 						/>
 						{/* <Point position={[0, 0, 1]} color="red" /> */}
 					</Points>
