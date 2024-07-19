@@ -11,7 +11,7 @@ import {
 	PointMaterial,
 	Image,
 	// Point,
-	// useTexture,
+	useTexture,
 } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
 // eslint-disable-next-line no-unused-vars
@@ -19,6 +19,9 @@ import * as THREE from 'three';
 // import { Color, Vector3, Quaternion } from 'three';
 
 import sphereFill from '../assets/earthlights.png';
+import grayDot from '../assets/gray.png';
+import redDot from '../assets/red.png';
+import blueDot from '../assets/gray.png';
 import fontUrl from '../assets/fonts/Lato-Bold.ttf';
 
 const Sphere = ({
@@ -34,7 +37,10 @@ const Sphere = ({
 	gray,
 	onClick,
 }) => {
-	// const texture = useTexture(sphereFill);
+	const grayTexture = useTexture(grayDot);
+	const redTexture = useTexture(redDot);
+	const blueTexture = useTexture(blueDot);
+
 	const ref = useRef();
 	const redRef = useRef();
 	const blueRef = useRef();
@@ -81,21 +87,23 @@ const Sphere = ({
 					<Points ref={ref} positions={sphere} stride={3} frustumCulled>
 						<PointMaterial
 							transparent
-							color={active ? 0x777777 : 0x333333}
+							// color={active ? 0x777777 : 0x333333}
 							size={0.115}
 							sizeAttenuation={true}
 							depthWrite={false}
+							map={grayTexture}
 							opacity={active ? 1 : 0.2}
 						/>
 					</Points>
 					<Points ref={redRef} positions={redPositions} stride={3}>
 						<pointsMaterial
 							transparent
-							color={active ? 0xaa0000 : 0x330000}
+							// color={active ? 0xaa0000 : 0x330000}
+							map={redTexture}
 							size={0.115}
 							sizeAttenuation={true}
 							depthWrite={false}
-							// opacity={active ? 1 : 0.2}
+							opacity={active ? 1 : 0.2}
 						/>
 						{/* <Point position={[0, 0, 1]} color="red" /> */}
 					</Points>
@@ -106,7 +114,8 @@ const Sphere = ({
 							size={0.115}
 							sizeAttenuation={true}
 							depthWrite={false}
-							// opacity={active ? 1 : 0.2}
+							map={blueTexture}
+							opacity={active ? 1 : 0.2}
 						/>
 						{/* <Point position={[0, 0, 1]} color="red" /> */}
 					</Points>

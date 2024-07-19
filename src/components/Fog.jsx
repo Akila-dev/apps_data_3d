@@ -16,7 +16,7 @@ const Fog = ({ scale, top }) => {
 				url={fog}
 				scale={scale ? scale : [0.8, 0.8]}
 				transparent
-				position={[0, top ? top : 0, -0.1]}
+				position={[0, top ? top : 0, -0]}
 			/>
 		</mesh>
 	);

@@ -1,7 +1,8 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-import { Text } from '@react-three/drei';
+import { Text, Image as Dots } from '@react-three/drei';
+import { motion } from 'framer-motion-3d';
 
 import { Image, Sphere, Fog } from '../components';
 import fontUrl from '../assets/fonts/Lato-Bold.ttf';
@@ -42,17 +43,14 @@ const Left = ({
 					>
 						{text}
 					</Text>
-					<Image
+					<Dots
 						url={activeNav === i ? activePoint : grayPoint}
-						scale={0.03}
+						scale={[0.03, 0.03]}
 						position={[0.03, (positions[i] - 0.2) / 18.5, 0.01]}
+						transparent
 						// opacity={activeSphere === -1 ? 1 : 0.1}
 
 						// opacity={0.4}
-					/>
-					<pointLight
-						intensity={0.01}
-						position={[0, (positions[i] - 0.2) / 18.5, 0.1]}
 					/>
 				</mesh>
 			))}
@@ -61,7 +59,24 @@ const Left = ({
 				scale={0.4}
 				position={[0.22, -0.097, 0]}
 				// opacity={0.4}
-				opacity={activeSphere === -1 ? 0.4 : 0.1}
+				opacity={activeSphere === -1 ? 0.5 : 0.1}
+				roughness={0}
+			/>
+			<motion.pointLight
+				// initial={{ scale: 0 }}
+				animate={{ x: [-0.5, 1] }}
+				transition={{
+					duration: 5,
+					repeat: Infinity,
+					type: 'tween',
+					stiffness: 100,
+				}}
+				color={0xaaaaaa}
+				intensity={0.3}
+				position={[0, -0.097, 0.1]}
+				// position={[0.22, -0.097, 0.1]}
+
+				// position={[0, (positions[i] - 0.2) / 18.5, 0.1]}
 			/>
 			<mesh
 				onClick={() => setActiveData(dataLength - 1)}

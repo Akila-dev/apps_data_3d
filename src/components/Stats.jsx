@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
-// import { Image } from '@react-three/drei';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion-3d';
 import { useFrame } from '@react-three/fiber';
+import { Image } from '@react-three/drei';
 
-import { StatsText, Image } from '../components';
+import { StatsText } from '../components';
 
 import circle from '../assets/circle.png';
 import lines from '../assets/lines2.png';
@@ -20,7 +20,12 @@ const Circle = ({ position, stat, label, onClick }) => {
 	return (
 		<mesh position={position} onPointerDown={onClick}>
 			<motion.mesh ref={circleRef}>
-				<Image url={circle} scale={0.17} position={[0, 0, -0.01]} />
+				<Image
+					transparent
+					url={circle}
+					scale={[0.17, 0.17]}
+					position={[0, 0, 0]}
+				/>
 			</motion.mesh>
 
 			<mesh onClick={onClick}>
@@ -30,10 +35,11 @@ const Circle = ({ position, stat, label, onClick }) => {
 					textAlign="center"
 					position={[0, 0, 0]}
 					scale={1.1}
+					transparent
 				/>
 			</mesh>
 			{/* OVERLAY FOR CLICK EVENT
-			<Image
+			<Image transparent
 				onClick={onClick}
 				url={circle}
 				scale={0.17}
@@ -53,7 +59,7 @@ const StatsExpandedContent = ({ position, automated, manual }) => (
 			position={[-0.005, 0.105, 0]}
 			scale={1.1}
 		/>
-		<Image url={lines} scale={0.13} position={[0, 0, 0]} />
+		<Image transparent url={lines} scale={[0.13, 0.13]} position={[0, 0, 0]} />
 		<StatsText
 			stat=""
 			label={`${manual} MANUAL`}
