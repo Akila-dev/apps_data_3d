@@ -100,7 +100,7 @@ const Sphere = ({
 							sizeAttenuation={true}
 							depthWrite={false}
 							map={grayTexture}
-							opacity={active ? 1 : 0.3}
+							opacity={active ? 0.8 : 0.3}
 						/>
 					</Points>
 					<Points ref={redRef} positions={redPositions} stride={3}>
@@ -111,7 +111,7 @@ const Sphere = ({
 							size={0.14}
 							sizeAttenuation={true}
 							depthWrite={false}
-							opacity={active ? 1 : 0.3}
+							opacity={active ? 0.8 : 0.3}
 						/>
 						{/* <Point position={[0, 0, 1]} color="red" /> */}
 					</Points>
@@ -123,7 +123,7 @@ const Sphere = ({
 							sizeAttenuation={true}
 							depthWrite={false}
 							map={blueTexture}
-							opacity={active ? 1 : 0.3}
+							opacity={active ? 0.8 : 0.3}
 						/>
 						{/* <Point position={[0, 0, 1]} color="red" /> */}
 					</Points>
