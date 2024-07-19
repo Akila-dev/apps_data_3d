@@ -10,7 +10,7 @@ import {
 	Points,
 	PointMaterial,
 	Image,
-	Point,
+	// Point,
 	// useTexture,
 } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
