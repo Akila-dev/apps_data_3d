@@ -76,7 +76,7 @@ const Sphere = ({
 				</Text>
 				<Image
 					url={sphereFill}
-					scale={[1.95, 1.95]}
+					scale={[1.75, 1.75]}
 					transparent
 					position={[0, 0, 0]}
 					opacity={0.1}
