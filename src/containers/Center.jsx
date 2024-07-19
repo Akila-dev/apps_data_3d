@@ -1,13 +1,19 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import { Text } from '@react-three/drei';
 import { Sphere, Fog } from '../components';
 import { Image } from '../components';
 import logos from '../assets/apps-logo.png';
 import fontUrl from '../assets/fonts/Lato-Bold.ttf';
 
-const Center = ({ sphereText, allApps, activeSphere, setActiveSphere }) => {
+const Center = ({
+	sphereText,
+	allApps,
+	activeSphere,
+	setActiveSphere,
+	sphereData,
+}) => {
 	// const [activeSphere, setActiveSphere] = useState(-1);
 	const val = 0.35 * Math.PI;
 	const radius = 2.6;
@@ -36,8 +42,8 @@ const Center = ({ sphereText, allApps, activeSphere, setActiveSphere }) => {
 			{sphereText.map((text, i) => (
 				<mesh
 					key={i}
-					onPointerOver={() => pointerOver(i)}
-					onPointerOut={pointerOut}
+					// onPointerOver={() => pointerOver(i)}
+					// onPointerOut={pointerOut}
 					// position={[
 					// 	Math.cos(val + Math.PI * 0.286 * i) * radius,
 					// 	Math.sin(val + Math.PI * 0.286 * i) * radius,
@@ -60,9 +66,11 @@ const Center = ({ sphereText, allApps, activeSphere, setActiveSphere }) => {
 						active={
 							activeSphere === i ? true : activeSphere === -1 ? true : false
 						}
-						// red={sphereData[i].red}
-						// blue={sphereData[i].blue}
-						// gray={sphereData[i].gray}
+						onPointerOver={() => pointerOver(i)}
+						onPointerOut={pointerOut}
+						red={sphereData[i].red}
+						blue={sphereData[i].blue}
+						gray={sphereData[i].gray}
 					/>
 				</mesh>
 			))}

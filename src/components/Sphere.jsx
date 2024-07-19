@@ -10,11 +10,15 @@ import {
 	Points,
 	PointMaterial,
 	Image,
+	Point,
 	// useTexture,
 } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
+// eslint-disable-next-line no-unused-vars
+import * as THREE from 'three';
+// import { Color, Vector3, Quaternion } from 'three';
 
-import sphereFill from '../assets/sphere.png';
+import sphereFill from '../assets/earthlights.png';
 import fontUrl from '../assets/fonts/Lato-Bold.ttf';
 
 const Sphere = ({
@@ -25,20 +29,39 @@ const Sphere = ({
 	onPointerOver,
 	onPointerOut,
 	active,
+	red,
+	blue,
+	gray,
 }) => {
 	// const texture = useTexture(sphereFill);
 	const ref = useRef();
-	// const redRef = useRef();
+	const redRef = useRef();
+	const blueRef = useRef();
 	// const [decal] = useTexture([sphereFill]);
 	const [sphere, setSphere] = useState([0, 0, 0]);
 
 	useEffect(() => {
-		setSphere(random.inSphere(new Float32Array(2000), { radius: 1 }));
+		setSphere(
+			random.inSphere(new Float32Array((2000 * gray) / 100), { radius: 1 })
+		);
 	}, []);
 
 	useFrame((state, delta) => {
 		ref.current.rotation.x -= delta / 5;
 		ref.current.rotation.y -= delta / 5;
+
+		redRef.current.rotation.x -= delta / 5;
+		redRef.current.rotation.y -= delta / 5;
+
+		blueRef.current.rotation.x -= delta / 5;
+		blueRef.current.rotation.y -= delta / 5;
+	});
+
+	const redPositions = random.inSphere(new Float32Array((2000 * red) / 100), {
+		radius: 0.75,
+	});
+	const bluePositions = random.inSphere(new Float32Array((2000 * blue) / 100), {
+		radius: 0.5,
 	});
 
 	return (
@@ -51,18 +74,40 @@ const Sphere = ({
 				<mesh
 					position={[0, 0, 0]}
 					scale={1}
-					onPointerOver={onPointerOver}
-					onPointerOut={onPointerOut}
+					// onPointerOver={onPointerOver}
+					// onPointerOut={onPointerOut}
 				>
 					<Points ref={ref} positions={sphere} stride={3} frustumCulled>
 						<PointMaterial
 							transparent
-							color="#fffdf5"
+							color={active ? 0xaaaaaa : 0x333333}
 							size={0.1}
 							sizeAttenuation={true}
 							depthWrite={false}
 							opacity={active ? 1 : 0.2}
 						/>
+					</Points>
+					<Points ref={redRef} positions={redPositions} stride={3}>
+						<pointsMaterial
+							transparent
+							color={active ? 0xaa0000 : 0x330000}
+							size={0.1}
+							sizeAttenuation={true}
+							depthWrite={false}
+							// opacity={active ? 1 : 0.2}
+						/>
+						{/* <Point position={[0, 0, 1]} color="red" /> */}
+					</Points>
+					<Points ref={blueRef} positions={bluePositions} stride={3}>
+						<pointsMaterial
+							transparent
+							color={active ? 0x0000aa : 0x000033}
+							size={0.1}
+							sizeAttenuation={true}
+							depthWrite={false}
+							// opacity={active ? 1 : 0.2}
+						/>
+						{/* <Point position={[0, 0, 1]} color="red" /> */}
 					</Points>
 				</mesh>
 				<Text
@@ -74,13 +119,15 @@ const Sphere = ({
 				>
 					{text}
 				</Text>
-				<Image
-					url={sphereFill}
-					scale={[1.75, 1.75]}
-					transparent
-					position={[0, 0, 0]}
-					opacity={0.1}
-				/>
+				<mesh onPointerOver={onPointerOver} onPointerOut={onPointerOut}>
+					<Image
+						url={sphereFill}
+						scale={[1.75, 1.5]}
+						transparent
+						position={[0, 0, 0]}
+						opacity={0.1}
+					/>
+				</mesh>
 			</mesh>
 		</motion.mesh>
 	);
