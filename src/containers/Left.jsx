@@ -9,7 +9,13 @@ import tubes from '../assets/tube.png';
 import grayPoint from '../assets/point-circle.png';
 import activePoint from '../assets/active-point.png';
 
-const Left = ({ leftText, activeSphere, setActiveSphere, dataLength }) => {
+const Left = ({
+	leftText,
+	activeSphere,
+	setActiveSphere,
+	dataLength,
+	sphereData,
+}) => {
 	// eslint-disable-next-line no-unused-vars
 	const [activeNav, setActiveNav] = useState(4);
 	const positions = [2, 1, 0, -1, -2, -3, -4];
@@ -74,6 +80,9 @@ const Left = ({ leftText, activeSphere, setActiveSphere, dataLength }) => {
 							? true
 							: false
 					}
+					red={sphereData[dataLength - 1].red}
+					blue={sphereData[dataLength - 1].blue}
+					gray={sphereData[dataLength - 1].gray}
 				/>
 			</mesh>
 		</group>

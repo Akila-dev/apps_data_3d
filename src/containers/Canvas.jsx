@@ -164,9 +164,9 @@ const Canvas = () => {
 			aPOpen: 2,
 			aAutomated: 89,
 			aManual: 24,
-			gray: 80,
-			red: 15,
-			blue: 5,
+			gray: 100,
+			red: 0,
+			blue: 0,
 		},
 	];
 	return (
@@ -182,6 +182,7 @@ const Canvas = () => {
 							activeSphere={activeSphere}
 							setActiveSphere={setActiveSphere}
 							dataLength={sphereData.length}
+							sphereData={sphereData}
 						/>
 					</group>
 					<group scale={1.5} position={[0, 0, -9]}>

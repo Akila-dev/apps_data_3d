@@ -80,8 +80,8 @@ const Sphere = ({
 					<Points ref={ref} positions={sphere} stride={3} frustumCulled>
 						<PointMaterial
 							transparent
-							color={active ? 0xaaaaaa : 0x333333}
-							size={0.1}
+							color={active ? 0x777777 : 0x333333}
+							size={0.115}
 							sizeAttenuation={true}
 							depthWrite={false}
 							opacity={active ? 1 : 0.2}
@@ -91,7 +91,7 @@ const Sphere = ({
 						<pointsMaterial
 							transparent
 							color={active ? 0xaa0000 : 0x330000}
-							size={0.1}
+							size={0.115}
 							sizeAttenuation={true}
 							depthWrite={false}
 							// opacity={active ? 1 : 0.2}
@@ -102,7 +102,7 @@ const Sphere = ({
 						<pointsMaterial
 							transparent
 							color={active ? 0x0000aa : 0x000033}
-							size={0.1}
+							size={0.115}
 							sizeAttenuation={true}
 							depthWrite={false}
 							// opacity={active ? 1 : 0.2}
@@ -124,7 +124,7 @@ const Sphere = ({
 						url={sphereFill}
 						scale={[1.75, 1.5]}
 						transparent
-						position={[0, 0, 0]}
+						position={[0, 0, 1]}
 						opacity={0.1}
 					/>
 				</mesh>
