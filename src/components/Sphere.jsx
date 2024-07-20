@@ -3,17 +3,17 @@
 
 import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion-3d';
-import { useFrame } from '@react-three/fiber';
+// import { useFrame } from '@react-three/fiber';
 import {
 	// Sphere as SphereMesh,
 	Text,
-	Points,
-	PointMaterial,
+	// Points,
+	// PointMaterial,
 	Image,
 	// Point,
 	useTexture,
 } from '@react-three/drei';
-import * as random from 'maath/random/dist/maath-random.esm';
+// import * as random from 'maath/random/dist/maath-random.esm';
 // eslint-disable-next-line no-unused-vars
 import * as THREE from 'three';
 // import { Color, Vector3, Quaternion } from 'three';
@@ -22,9 +22,9 @@ import sphereFill from '../assets/earthlights.png';
 import grayDot from '../assets/gray.png';
 import redDot from '../assets/red.png';
 import blueDot from '../assets/blue.png';
-import grayDot2 from '../assets/gray2.png';
-import redDot2 from '../assets/red2.png';
-import blueDot2 from '../assets/blue2.png';
+// import grayDot2 from '../assets/gray2.png';
+// import redDot2 from '../assets/red2.png';
+// import blueDot2 from '../assets/blue2.png';
 import fontUrl from '../assets/fonts/Lato-Bold.ttf';
 
 const Sphere = ({
@@ -43,9 +43,9 @@ const Sphere = ({
 	const grayTexture = useTexture(grayDot);
 	const redTexture = useTexture(redDot);
 	const blueTexture = useTexture(blueDot);
-	const grayTexture2 = useTexture(grayDot2);
-	const redTexture2 = useTexture(redDot2);
-	const blueTexture2 = useTexture(blueDot2);
+	// const grayTexture2 = useTexture(grayDot2);
+	// const redTexture2 = useTexture(redDot2);
+	// const blueTexture2 = useTexture(blueDot2);
 
 	const ref = useRef();
 	const redRef = useRef();
@@ -105,6 +105,7 @@ const Sphere = ({
 		// 	grayPoints.push(radius * csth);
 		// }
 		// setPos(() => new Float32Array(grayPoints));
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
@@ -127,12 +128,13 @@ const Sphere = ({
 						</bufferGeometry>
 						<pointsMaterial
 							transparent
-							map={active ? grayTexture : grayTexture2}
+							map={grayTexture}
+							opacity={active ? 1 : 0.2}
 							size={0.12}
 							sizeAttenuation={true}
 							depthWrite={false}
-							roughness={0.1}
-							metalness={1}
+							// roughness={0.1}
+							// metalness={1}
 						/>
 					</points>
 					<points ref={redRef} rotation={[0, 0, -blue * 0.06]}>
@@ -147,12 +149,13 @@ const Sphere = ({
 						</bufferGeometry>
 						<pointsMaterial
 							transparent
-							map={active ? redTexture : redTexture2}
+							map={redTexture}
+							opacity={active ? 1 : 0.2}
 							size={0.12}
 							sizeAttenuation={true}
 							depthWrite={false}
-							roughness={0.1}
-							metalness={1}
+							// roughness={0.1}
+							// metalness={1}
 						/>
 					</points>
 					<points ref={blueRef} rotation={[0, 0, 0]}>
@@ -167,12 +170,13 @@ const Sphere = ({
 						</bufferGeometry>
 						<pointsMaterial
 							transparent
-							map={active ? blueTexture : blueTexture2}
+							map={blueTexture}
+							opacity={active ? 1 : 0.2}
 							size={0.12}
 							sizeAttenuation={true}
 							depthWrite={false}
-							roughness={0.1}
-							metalness={1}
+							// roughness={0.1}
+							// metalness={1}
 						/>
 					</points>
 				</mesh>
