@@ -64,9 +64,9 @@ const Left = ({
 			/>
 			<motion.pointLight
 				// initial={{ scale: 0 }}
-				animate={{ x: [-0.5, 1] }}
+				animate={{ x: [-0.5, 2] }}
 				transition={{
-					duration: 5,
+					duration: 7,
 					repeat: Infinity,
 					type: 'tween',
 					stiffness: 100,

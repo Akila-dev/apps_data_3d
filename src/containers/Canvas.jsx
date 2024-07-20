@@ -191,7 +191,7 @@ const Canvas = () => {
 	return (
 		<div className="h-screen w-full">
 			<SceneCanvas camera={{ position: [0, 0, 1], fov: 10 }}>
-				<OrbitControls enableRotate={false} />
+				<OrbitControls enableRotate={false} enableZoom={false} />
 				<ambientLight intensity={2} />
 				{/* <pointLight intensity={10} position={[0, -1, 1]} /> */}
 

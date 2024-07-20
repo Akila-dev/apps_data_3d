@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/no-unknown-property */
 
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion-3d';
 import { useFrame } from '@react-three/fiber';
 import {
@@ -10,13 +10,18 @@ import {
 	Points,
 	PointMaterial,
 	Image,
-	// useTexture,
+	// Point,
+	useTexture,
 } from '@react-three/drei';
 import * as random from 'maath/random/dist/maath-random.esm';
+// eslint-disable-next-line no-unused-vars
 import * as THREE from 'three';
-import { Color, Vector3, Quaternion } from 'three';
+// import { Color, Vector3, Quaternion } from 'three';
 
 import sphereFill from '../assets/earthlights.png';
+import grayDot from '../assets/gray.png';
+import redDot from '../assets/red.png';
+import blueDot from '../assets/gray.png';
 import fontUrl from '../assets/fonts/Lato-Bold.ttf';
 
 const Sphere = ({
@@ -27,81 +32,52 @@ const Sphere = ({
 	onPointerOver,
 	onPointerOut,
 	active,
+	red,
+	blue,
+	gray,
+	onClick,
 }) => {
-	// const texture = useTexture(sphereFill);
+	const grayTexture = useTexture(grayDot);
+	const redTexture = useTexture(redDot);
+	const blueTexture = useTexture(blueDot);
+
 	const ref = useRef();
-	const mesh = useRef();
-	const quaternion = new Quaternion();
-	// const redRef = useRef();
+	const redRef = useRef();
+	const blueRef = useRef();
 	// const [decal] = useTexture([sphereFill]);
 	const [sphere, setSphere] = useState([0, 0, 0]);
-	const [sphereGeo, setSphereGeo] = useState([1, 0, 1, 0, 1, 1]);
+	const [redPositions, setRedPositions] = useState([0, 0, 0]);
+	const [bluePositions, setBluePositions] = useState([0, 0, 0]);
 
 	useEffect(() => {
-		setSphere(random.inSphere(new Float32Array(2000), { radius: 1 }));
+		setSphere(
+			random.inSphere(new Float32Array((2000 * gray) / 100), { radius: 1 })
+		);
+		setRedPositions(
+			random.inSphere(new Float32Array((2000 * red) / 100), {
+				radius: 0.75,
+			})
+		);
+		setBluePositions(
+			random.inSphere(new Float32Array((2000 * blue) / 100), {
+				radius: 0.5,
+			})
+		);
 	}, []);
 
 	useFrame((state, delta) => {
-		// ref.current.rotation.x -= delta / 5;
-		// ref.current.rotation.y -= delta / 5;
+		ref.current.rotation.x -= delta / 5;
+		ref.current.rotation.y -= delta / 5;
 
-		mesh.current.rotation.x -= delta / 5;
-		mesh.current.rotation.y -= delta / 5;
+		redRef.current.rotation.x -= delta / 5;
+		redRef.current.rotation.y -= delta / 5;
+
+		blueRef.current.rotation.x -= delta / 5;
+		blueRef.current.rotation.y -= delta / 5;
 	});
 
-	// useEffect(() => {
-	// 	var geometry = new Float32Array(2000);
-	// 	// Begins
-	// 	const distance = Math.min(200, window.innerWidth / 4);
-
-	// 	for (let i = 0; i < 2000; i++) {
-	// 		var vertex = new THREE.Vector3();
-
-	// 		var theta = THREE.MathUtils.randFloatSpread(360);
-	// 		var phi = THREE.MathUtils.randFloatSpread(360);
-
-	// 		vertex.x = distance * Math.sin(theta) * Math.cos(phi);
-	// 		vertex.y = distance * Math.sin(theta) * Math.cos(phi);
-	// 		vertex.z = distance * Math.cos(theta);
-	// 		geometry[i] = vertex;
-	// 	}
-
-	// 	setSphereGeo(geometry);
-	// }, []);
-
-	useEffect(() => {
-		// Get the current attributes of the geometry
-		const currentPositions = mesh.current.geometry.attributes.position;
-		// Copy the attributes
-		const originalPositions = currentPositions.clone();
-		const originalPositionsArray = originalPositions?.array || [];
-
-		// Go through each vector (series of 3 values) and modify the values
-		for (let i = 0; i < originalPositionsArray.length; i = i + 3) {
-			const modifiedPositionVector = new Vector3(
-				originalPositionsArray[i],
-				originalPositionsArray[i + 1],
-				originalPositionsArray[i + 2]
-			);
-			const upVector = new Vector3(0, 1, 0);
-
-			// Rotate along the y axis (0, 1, 0)
-			quaternion.setFromAxisAngle(
-				upVector,
-				(Math.PI / 180) *
-					(modifiedPositionVector.y + 50) *
-					Math.floor(Math.random() * 360) // the higher along the y axis the vertex is, the more we rotate
-			);
-			modifiedPositionVector.applyQuaternion(quaternion);
-
-			// Apply the modified position vector coordinates to the current position attributes array
-			currentPositions.array[i] = modifiedPositionVector.x;
-			currentPositions.array[i + 1] = modifiedPositionVector.y;
-			currentPositions.array[i + 2] = modifiedPositionVector.z;
-		}
-		// Set the needsUpdate flag to "true"
-		currentPositions.needsUpdate = true;
-	}, []);
+	// const redPositions = ;
+	// const bluePositions = ;
 
 	return (
 		<motion.mesh
@@ -111,46 +87,46 @@ const Sphere = ({
 		>
 			<mesh position={position}>
 				<mesh
-					// ref={mesh}
 					position={[0, 0, 0]}
 					scale={1}
 					// onPointerOver={onPointerOver}
 					// onPointerOut={onPointerOut}
 				>
-					{/* <Points ref={ref} positions={sphere} stride={3} frustumCulled>
+					<Points ref={ref} positions={sphere} stride={3} frustumCulled>
 						<PointMaterial
 							transparent
-							color="#fffdf5"
-							size={0.1}
+							// color={active ? 0x777777 : 0x333333}
+							size={0.14}
 							sizeAttenuation={true}
 							depthWrite={false}
-							opacity={active ? 1 : 0.2}
+							map={grayTexture}
+							opacity={active ? 1 : 0.3}
 						/>
-					</Points> */}
-					{/* <sphereGeometry args={[1, 32, 32]} /> */}
-					{/* <meshLambertMaterial size={0.15} /> */}
-
-					<points ref={mesh} frustumCulled>
-						<sphereGeometry args={[1, 32, 22, 0]} />
-						{/* <bufferGeometry attach="geometry">
-							<bufferAttribute
-								attach="attributes-position"
-								count={sphereGeo.length / 3}
-								array={sphereGeo}
-								itemSize={3}
-								normalize={false}
-							/>
-						</bufferGeometry> */}
+					</Points>
+					<Points ref={redRef} positions={redPositions} stride={3}>
 						<pointsMaterial
 							transparent
-							color={active ? 0xfffdf5 : 0x333333}
-							size={0.1}
+							// color={active ? 0xaa0000 : 0x330000}
+							map={redTexture}
+							size={0.14}
 							sizeAttenuation={true}
 							depthWrite={false}
-							opacity={active ? 1 : 0.2}
-							frustumCulled
+							opacity={active ? 1 : 0.3}
 						/>
-					</points>
+						{/* <Point position={[0, 0, 1]} color="red" /> */}
+					</Points>
+					<Points ref={blueRef} positions={bluePositions} stride={3}>
+						<pointsMaterial
+							transparent
+							color={active ? 0x0000aa : 0x000033}
+							size={0.14}
+							sizeAttenuation={true}
+							depthWrite={false}
+							map={blueTexture}
+							opacity={active ? 1 : 0.3}
+						/>
+						{/* <Point position={[0, 0, 1]} color="red" /> */}
+					</Points>
 				</mesh>
 				<Text
 					color={active ? 0xffffff : 0x333333}
@@ -161,12 +137,16 @@ const Sphere = ({
 				>
 					{text}
 				</Text>
-				<mesh onPointerOver={onPointerOver} onPointerOut={onPointerOut}>
+				<mesh
+					onPointerOver={onPointerOver}
+					onPointerOut={onPointerOut}
+					onClick={onClick}
+				>
 					<Image
 						url={sphereFill}
 						scale={[1.75, 1.5]}
 						transparent
-						position={[0, 0, 0]}
+						position={[0, 0, 1]}
 						opacity={0.1}
 					/>
 				</mesh>

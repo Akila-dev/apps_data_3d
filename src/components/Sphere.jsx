@@ -21,7 +21,10 @@ import * as THREE from 'three';
 import sphereFill from '../assets/earthlights.png';
 import grayDot from '../assets/gray.png';
 import redDot from '../assets/red.png';
-import blueDot from '../assets/gray.png';
+import blueDot from '../assets/blue.png';
+import grayDot2 from '../assets/gray2.png';
+import redDot2 from '../assets/red2.png';
+import blueDot2 from '../assets/blue2.png';
 import fontUrl from '../assets/fonts/Lato-Bold.ttf';
 
 const Sphere = ({
@@ -40,44 +43,69 @@ const Sphere = ({
 	const grayTexture = useTexture(grayDot);
 	const redTexture = useTexture(redDot);
 	const blueTexture = useTexture(blueDot);
+	const grayTexture2 = useTexture(grayDot2);
+	const redTexture2 = useTexture(redDot2);
+	const blueTexture2 = useTexture(blueDot2);
 
 	const ref = useRef();
 	const redRef = useRef();
 	const blueRef = useRef();
-	// const [decal] = useTexture([sphereFill]);
-	const [sphere, setSphere] = useState([0, 0, 0]);
-	const [redPositions, setRedPositions] = useState([0, 0, 0]);
-	const [bluePositions, setBluePositions] = useState([0, 0, 0]);
+
+	const [pos, setPos] = useState([]);
+	const [posRed, setPosRed] = useState([]);
+	const [posBlue, setPosBlue] = useState([]);
 
 	useEffect(() => {
-		setSphere(
-			random.inSphere(new Float32Array((2000 * gray) / 100), { radius: 1 })
-		);
-		setRedPositions(
-			random.inSphere(new Float32Array((2000 * red) / 100), {
-				radius: 0.75,
-			})
-		);
-		setBluePositions(
-			random.inSphere(new Float32Array((2000 * blue) / 100), {
-				radius: 0.5,
-			})
-		);
+		const totalPoints = 500;
+		var radius = 1.0;
+		var grayPoints = [];
+		var redPoints = [];
+		var bluePoints = [];
+		for (let i = 0; i < (totalPoints * gray) / 100; i++) {
+			let phi = 2 * 3.1415926 * Math.random();
+			let csth = 1.0 - 2.0 * Math.random();
+			let snth = Math.sqrt(1.0 - csth * csth);
+
+			grayPoints.push(radius * snth * Math.sin((phi * gray) / 100));
+			grayPoints.push(radius * snth * Math.cos((phi * gray) / 100));
+			grayPoints.push(radius * csth);
+		}
+
+		for (let i = 0; i < (totalPoints * red) / 100; i++) {
+			let phi = 2 * 3.1415926 * Math.random();
+			let csth = 1.0 - 2.0 * Math.random();
+			let snth = Math.sqrt(1.0 - csth * csth);
+
+			redPoints.push(radius * snth * Math.sin((phi * red) / 100));
+			redPoints.push(radius * snth * Math.cos((phi * red) / 100));
+			redPoints.push(radius * csth);
+		}
+		for (let i = 0; i < (totalPoints * blue) / 100; i++) {
+			let phi = 2 * 3.1415926 * Math.random();
+			let csth = 1.0 - 2.0 * Math.random();
+			let snth = Math.sqrt(1.0 - csth * csth);
+
+			bluePoints.push(radius * snth * Math.sin((phi * blue) / 100));
+			bluePoints.push(radius * snth * Math.cos((phi * blue) / 100));
+			bluePoints.push(radius * csth);
+		}
+		setPos(() => new Float32Array(grayPoints));
+		setPosRed(() => new Float32Array(redPoints));
+		setPosBlue(() => new Float32Array(bluePoints));
+
+		// var radius = 1.0;
+		// var grayPoints = [];
+		// for (var i = 0; i < 1000; i++) {
+		// 	var phi = 2 * 3.1415926 * Math.random();
+		// 	var csth = 1.0 - 2.0 * Math.random();
+		// 	var snth = Math.sqrt(1.0 - csth * csth);
+
+		// 	grayPoints.push(radius * snth * Math.cos(phi));
+		// 	grayPoints.push(radius * snth * Math.sin(phi));
+		// 	grayPoints.push(radius * csth);
+		// }
+		// setPos(() => new Float32Array(grayPoints));
 	}, []);
-
-	useFrame((state, delta) => {
-		ref.current.rotation.x -= delta / 5;
-		ref.current.rotation.y -= delta / 5;
-
-		redRef.current.rotation.x -= delta / 5;
-		redRef.current.rotation.y -= delta / 5;
-
-		blueRef.current.rotation.x -= delta / 5;
-		blueRef.current.rotation.y -= delta / 5;
-	});
-
-	// const redPositions = ;
-	// const bluePositions = ;
 
 	return (
 		<motion.mesh
@@ -86,47 +114,67 @@ const Sphere = ({
 			position={[0, 0, 0.21]}
 		>
 			<mesh position={position}>
-				<mesh
-					position={[0, 0, 0]}
-					scale={1}
-					// onPointerOver={onPointerOver}
-					// onPointerOut={onPointerOut}
-				>
-					<Points ref={ref} positions={sphere} stride={3} frustumCulled>
-						<PointMaterial
-							transparent
-							// color={active ? 0x777777 : 0x333333}
-							size={0.14}
-							sizeAttenuation={true}
-							depthWrite={false}
-							map={grayTexture}
-							opacity={active ? 1 : 0.3}
-						/>
-					</Points>
-					<Points ref={redRef} positions={redPositions} stride={3}>
+				<mesh scale={1}>
+					<points ref={ref} rotation={[0, 0, gray * 0.063]}>
+						<bufferGeometry attach="geometry">
+							<bufferAttribute
+								attach="attributes-position"
+								count={pos.length / 3}
+								array={pos}
+								itemSize={3}
+								normalize={false}
+							/>
+						</bufferGeometry>
 						<pointsMaterial
 							transparent
-							// color={active ? 0xaa0000 : 0x330000}
-							map={redTexture}
-							size={0.14}
+							map={active ? grayTexture : grayTexture2}
+							size={0.12}
 							sizeAttenuation={true}
 							depthWrite={false}
-							opacity={active ? 1 : 0.3}
+							roughness={0.1}
+							metalness={1}
 						/>
-						{/* <Point position={[0, 0, 1]} color="red" /> */}
-					</Points>
-					<Points ref={blueRef} positions={bluePositions} stride={3}>
+					</points>
+					<points ref={redRef} rotation={[0, 0, -blue * 0.06]}>
+						<bufferGeometry attach="geometry">
+							<bufferAttribute
+								attach="attributes-position"
+								count={posRed.length / 3}
+								array={posRed}
+								itemSize={3}
+								normalize={false}
+							/>
+						</bufferGeometry>
 						<pointsMaterial
 							transparent
-							color={active ? 0x0000aa : 0x000033}
-							size={0.14}
+							map={active ? redTexture : redTexture2}
+							size={0.12}
 							sizeAttenuation={true}
 							depthWrite={false}
-							map={blueTexture}
-							opacity={active ? 1 : 0.3}
+							roughness={0.1}
+							metalness={1}
 						/>
-						{/* <Point position={[0, 0, 1]} color="red" /> */}
-					</Points>
+					</points>
+					<points ref={blueRef} rotation={[0, 0, 0]}>
+						<bufferGeometry attach="geometry">
+							<bufferAttribute
+								attach="attributes-position"
+								count={posBlue.length / 3}
+								array={posBlue}
+								itemSize={3}
+								normalize={false}
+							/>
+						</bufferGeometry>
+						<pointsMaterial
+							transparent
+							map={active ? blueTexture : blueTexture2}
+							size={0.12}
+							sizeAttenuation={true}
+							depthWrite={false}
+							roughness={0.1}
+							metalness={1}
+						/>
+					</points>
 				</mesh>
 				<Text
 					color={active ? 0xffffff : 0x333333}
@@ -147,7 +195,7 @@ const Sphere = ({
 						scale={[1.75, 1.5]}
 						transparent
 						position={[0, 0, 1]}
-						opacity={0.1}
+						opacity={0}
 					/>
 				</mesh>
 			</mesh>
