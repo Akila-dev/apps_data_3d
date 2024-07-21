@@ -51,9 +51,9 @@ const Sphere = ({
 	const redRef = useRef();
 	const blueRef = useRef();
 
-	const [pos, setPos] = useState([]);
-	const [posRed, setPosRed] = useState([]);
-	const [posBlue, setPosBlue] = useState([]);
+	const [pos, setPos] = useState(new Float32Array());
+	const [posRed, setPosRed] = useState(new Float32Array());
+	const [posBlue, setPosBlue] = useState(new Float32Array());
 
 	useEffect(() => {
 		const totalPoints = 500;
@@ -116,69 +116,76 @@ const Sphere = ({
 		>
 			<mesh position={position}>
 				<mesh scale={1}>
-					<points ref={ref} rotation={[0, 0, gray * 0.063]}>
-						<bufferGeometry attach="geometry">
-							<bufferAttribute
-								attach="attributes-position"
-								count={pos.length / 3}
-								array={pos}
-								itemSize={3}
-								normalize={false}
+					{pos.length > 0 && (
+						<points ref={ref} rotation={[0, 0, gray * 0.063]}>
+							<bufferGeometry attach="geometry">
+								<bufferAttribute
+									attach="attributes-position"
+									count={pos.length / 3}
+									array={pos}
+									itemSize={3}
+									normalize={false}
+								/>
+							</bufferGeometry>
+							<pointsMaterial
+								transparent
+								map={grayTexture}
+								opacity={active ? 1 : 0.2}
+								size={0.12}
+								sizeAttenuation={true}
+								depthWrite={false}
+								// roughness={0.1}
+								// metalness={1}
 							/>
-						</bufferGeometry>
-						<pointsMaterial
-							transparent
-							map={grayTexture}
-							opacity={active ? 1 : 0.2}
-							size={0.12}
-							sizeAttenuation={true}
-							depthWrite={false}
-							// roughness={0.1}
-							// metalness={1}
-						/>
-					</points>
-					<points ref={redRef} rotation={[0, 0, -blue * 0.06]}>
-						<bufferGeometry attach="geometry">
-							<bufferAttribute
-								attach="attributes-position"
-								count={posRed.length / 3}
-								array={posRed}
-								itemSize={3}
-								normalize={false}
+						</points>
+					)}
+					{posRed.length > 0 && (
+						<points ref={redRef} rotation={[0, 0, -blue * 0.06]}>
+							<bufferGeometry attach="geometry">
+								<bufferAttribute
+									attach="attributes-position"
+									count={posRed.length / 3}
+									array={posRed}
+									itemSize={3}
+									normalize={false}
+								/>
+							</bufferGeometry>
+							<pointsMaterial
+								transparent
+								map={redTexture}
+								opacity={active ? 1 : 0.2}
+								size={0.12}
+								sizeAttenuation={true}
+								depthWrite={false}
+								// roughness={0.1}
+								// metalness={1}
 							/>
-						</bufferGeometry>
-						<pointsMaterial
-							transparent
-							map={redTexture}
-							opacity={active ? 1 : 0.2}
-							size={0.12}
-							sizeAttenuation={true}
-							depthWrite={false}
-							// roughness={0.1}
-							// metalness={1}
-						/>
-					</points>
-					<points ref={blueRef} rotation={[0, 0, 0]}>
-						<bufferGeometry attach="geometry">
-							<bufferAttribute
-								attach="attributes-position"
-								count={posBlue.length / 3}
-								array={posBlue}
-								itemSize={3}
-								normalize={false}
+						</points>
+					)}
+
+					{posBlue.length > 0 && (
+						<points ref={blueRef} rotation={[0, 0, 0]}>
+							<bufferGeometry attach="geometry">
+								<bufferAttribute
+									attach="attributes-position"
+									count={posBlue.length / 3}
+									array={posBlue}
+									itemSize={3}
+									normalize={false}
+								/>
+							</bufferGeometry>
+							<pointsMaterial
+								transparent
+								map={blueTexture}
+								opacity={active ? 1 : 0.2}
+								size={0.12}
+								sizeAttenuation={true}
+								depthWrite={false}
+								// roughness={0.1}
+								// metalness={1}
 							/>
-						</bufferGeometry>
-						<pointsMaterial
-							transparent
-							map={blueTexture}
-							opacity={active ? 1 : 0.2}
-							size={0.12}
-							sizeAttenuation={true}
-							depthWrite={false}
-							// roughness={0.1}
-							// metalness={1}
-						/>
-					</points>
+						</points>
+					)}
 				</mesh>
 				<Text
 					color={active ? 0xffffff : 0x333333}
