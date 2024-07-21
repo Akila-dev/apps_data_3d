@@ -6,7 +6,7 @@ import { motion } from 'framer-motion-3d';
 import { useFrame } from '@react-three/fiber';
 import { Image } from '@react-three/drei';
 
-import { StatsText } from '../components';
+import { StatsText, Image as LinesImage } from '../components';
 
 import circle from '../assets/circle.png';
 import lines from '../assets/lines2.png';
@@ -59,7 +59,13 @@ const StatsExpandedContent = ({ position, automated, manual }) => (
 			position={[-0.005, 0.105, 0]}
 			scale={1.1}
 		/>
-		<Image transparent url={lines} scale={[0.13, 0.13]} position={[0, 0, 0]} />
+		<LinesImage
+			transparent
+			url={lines}
+			scale={0.13}
+			toneMapped
+			position={[0, 0, 0]}
+		/>
 		<StatsText
 			stat=""
 			label={`${manual} MANUAL`}

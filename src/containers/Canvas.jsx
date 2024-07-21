@@ -196,7 +196,7 @@ const Canvas = () => {
 				{/* <pointLight intensity={10} position={[0, -1, 1]} /> */}
 
 				{/* <Sphere position={[2, 2, 0]} /> */}
-				<group position={[0, 0.05, 2]}>
+				<group position={[-0.03, 0.05, 0.5]}>
 					<group scale={1.5} position={[-1.1, 0, -10]}>
 						<Left
 							leftText={leftText}

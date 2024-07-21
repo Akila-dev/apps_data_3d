@@ -66,14 +66,30 @@ const Left = ({
 				// initial={{ scale: 0 }}
 				animate={{ x: [-0.5, 2] }}
 				transition={{
-					duration: 7,
+					duration: 8,
 					repeat: Infinity,
 					type: 'tween',
 					stiffness: 100,
 				}}
 				color={0xaaaaaa}
-				intensity={0.3}
+				intensity={0.1}
 				position={[0, -0.097, 0.1]}
+				// position={[0.22, -0.097, 0.1]}
+
+				// position={[0, (positions[i] - 0.2) / 18.5, 0.1]}
+			/>
+			<motion.pointLight
+				// initial={{ scale: 0 }}
+				animate={{ x: [-0.5, 2] }}
+				transition={{
+					duration: 8,
+					repeat: Infinity,
+					type: 'tween',
+					stiffness: 100,
+				}}
+				color={0xaaaaaa}
+				intensity={0.1}
+				position={[0, 0.097, 0.1]}
 				// position={[0.22, -0.097, 0.1]}
 
 				// position={[0, (positions[i] - 0.2) / 18.5, 0.1]}
