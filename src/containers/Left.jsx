@@ -66,7 +66,7 @@ const Left = ({
 				// initial={{ scale: 0 }}
 				animate={{ x: [-0.5, 2] }}
 				transition={{
-					duration: 8,
+					duration: 5,
 					repeat: Infinity,
 					type: 'tween',
 					stiffness: 100,
@@ -82,7 +82,7 @@ const Left = ({
 				// initial={{ scale: 0 }}
 				animate={{ x: [-0.5, 2] }}
 				transition={{
-					duration: 8,
+					duration: 5,
 					repeat: Infinity,
 					type: 'tween',
 					stiffness: 100,
