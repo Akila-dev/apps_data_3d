@@ -1,8 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { Canvas as SceneCanvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 // import * as THREE from 'three';
 import { Center, Left, Right } from '../containers';
 
@@ -191,41 +190,39 @@ const Canvas = () => {
 	return (
 		<div className="h-screen w-full">
 			<SceneCanvas camera={{ position: [0, 0, 1], fov: 10 }}>
-				<OrbitControls enableRotate={false} enableZoom={false} />
 				<ambientLight intensity={2} />
-				{/* <pointLight intensity={10} position={[0, -1, 1]} /> */}
-
-				{/* <Sphere position={[2, 2, 0]} /> */}
-				<group position={[-0.03, 0.05, 0.5]}>
-					<group scale={1.5} position={[-1.1, 0, -10]}>
-						<Left
-							leftText={leftText}
-							activeSphere={activeSphere}
-							setActiveSphere={setActiveSphere}
-							dataLength={sphereData.length}
-							sphereData={sphereData}
-							setActiveData={setActiveData}
-						/>
+				<Suspense>
+					<group position={[-0.03, 0.05, 0.5]}>
+						<group scale={1.5} position={[-1.1, 0, -10]}>
+							<Left
+								leftText={leftText}
+								activeSphere={activeSphere}
+								setActiveSphere={setActiveSphere}
+								dataLength={sphereData.length}
+								sphereData={sphereData}
+								setActiveData={setActiveData}
+							/>
+						</group>
+						<group scale={1.5} position={[0, 0, -9]}>
+							<Center
+								sphereText={sphereText}
+								sphereData={sphereData}
+								allApps={245}
+								activeSphere={activeSphere}
+								setActiveSphere={setActiveSphere}
+								setActiveData={setActiveData}
+							/>
+						</group>
+						<group scale={1.5} position={[0.85, 0, -10]}>
+							<Right
+								sphereData={sphereData}
+								activeSphere={activeSphere}
+								activeData={activeData}
+								setActiveData={setActiveData}
+							/>
+						</group>
 					</group>
-					<group scale={1.5} position={[0, 0, -9]}>
-						<Center
-							sphereText={sphereText}
-							sphereData={sphereData}
-							allApps={245}
-							activeSphere={activeSphere}
-							setActiveSphere={setActiveSphere}
-							setActiveData={setActiveData}
-						/>
-					</group>
-					<group scale={1.5} position={[0.85, 0, -10]}>
-						<Right
-							sphereData={sphereData}
-							activeSphere={activeSphere}
-							activeData={activeData}
-							setActiveData={setActiveData}
-						/>
-					</group>
-				</group>
+				</Suspense>
 				{/* <gridHelper color="white" args={[1, 1]} /> */}
 			</SceneCanvas>
 		</div>

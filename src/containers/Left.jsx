@@ -36,7 +36,7 @@ const Left = ({
 				<mesh key={i}>
 					<Text
 						scale={0.025}
-						position={[0, (positions[i] - 0.2) / 18.5, 0]}
+						position={[0, (positions[i] - 0.2) / 18.5, 0.1]}
 						font={fontUrl}
 						anchorX="right"
 						color={activeSphere === -1 ? 0xffffff : 0x333333}
@@ -72,7 +72,7 @@ const Left = ({
 					stiffness: 100,
 				}}
 				color={0xaaaaaa}
-				intensity={0.1}
+				intensity={0.2}
 				position={[0, -0.097, 0.1]}
 				// position={[0.22, -0.097, 0.1]}
 
@@ -88,7 +88,7 @@ const Left = ({
 					stiffness: 100,
 				}}
 				color={0xaaaaaa}
-				intensity={0.1}
+				intensity={0.2}
 				position={[0, 0.097, 0.1]}
 				// position={[0.22, -0.097, 0.1]}
 
